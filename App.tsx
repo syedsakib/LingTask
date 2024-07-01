@@ -1,51 +1,16 @@
-// App.js
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, FlatList } from 'react-native';
-import ListItem from './components/ListItem';
-import { connect } from 'react-redux';
-import { addPlace } from './redux/actions/place';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import Table from './components/Table';
+import UserInput from './components/UserInput.js';
 
-const App = ({ places, add }) => {
-  const [placeName, setPlaceName] = useState('');
-
-  const placeSubmitHandler = () => {
-    if (placeName.trim() === '') {
-      return;
-    }
-    add(placeName);
-    setPlaceName('');
-  };
-
-  const placeNameChangeHandler = (value) => {
-    setPlaceName(value);
-  };
-
-  const renderListItem = ({ item }) => (
-    <ListItem
-      placeName={item.value}
-    />
-  );
-
+const App = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Search Places"
-          style={styles.placeInput}
-          value={placeName}
-          onChangeText={placeNameChangeHandler}
-        />
-        <Button
-          title='Add'
-          onPress={placeSubmitHandler}
-        />
+      <UserInput />
+   
+      <View style={styles.tableContainer}>
+        <Table />
       </View>
-      <FlatList
-        style={styles.listContainer}
-        data={places}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderListItem}
-      />
     </View>
   );
 };
@@ -56,29 +21,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%'
+  tableContainer: {
+    paddingVertical: 15,
   },
-  placeInput: {
-    width: '70%'
-  },
-  placeButton: {
-    width: '30%'
-  },
-  listContainer: {
-    width: '100%'
-  }
 });
 
-const mapStateToProps = state => ({
-  places: state.places.places
-});
-
-const mapDispatchToProps = dispatch => ({
-  add: name => dispatch(addPlace(name))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
