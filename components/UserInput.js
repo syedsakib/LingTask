@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, TouchableRipple, Text } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { fetchUsersWithName } from '../redux/actions/user';
-import { COLORS } from '../helpers/helpers';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {TextInput, TouchableRipple, Text} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {
+  fetchUsersWithName,
+  fetchUsersWithNameFuzzySearch,
+} from '../redux/actions/user';
+import {COLORS} from '../helpers/helpers';
+import FuzzySearchButton from './FuzzySearchButton';
+import LowestRankUsers from './LowestRankUsers';
 
 const UserInput = () => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
+  const [enabled, setEnabled] = useState(false);
 
   const placeSubmitHandler = () => {
     if (userName.trim() === '') {
       return;
     }
 
-    dispatch(fetchUsersWithName(userName));
+    {
+      enabled
+        ? dispatch(fetchUsersWithNameFuzzySearch(userName))
+        : dispatch(fetchUsersWithName(userName));
+    }
     setUserName('');
   };
 
@@ -23,22 +33,28 @@ const UserInput = () => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        label="User name..."
-        left={<TextInput.Icon icon="text-search" />}
-        value={userName}
-        style={styles.placeInput}
-        onChangeText={setNameChangeHandler}
-      />
+    <>
+      <View style={styles.inputContainer}>
+        <TextInput
+          label="User name..."
+          left={<TextInput.Icon icon="text-search" />}
+          value={userName}
+          style={styles.placeInput}
+          onChangeText={setNameChangeHandler}
+        />
 
-      <TouchableRipple
-        onPress={placeSubmitHandler}
-        rippleColor={COLORS.ash}
-        style={styles.placeButton}>
-        <Text>Search</Text>
-      </TouchableRipple>
-    </View>
+        <TouchableRipple
+          onPress={placeSubmitHandler}
+          rippleColor={COLORS.ash}
+          style={styles.placeButton}>
+          <Text>Search</Text>
+        </TouchableRipple>
+      </View>
+      {/* <View style={styles.buttonContainer}>
+        <FuzzySearchButton enabled={enabled} toggleEnabled={setEnabled} />
+        <LowestRankUsers />
+      </View> */}
+    </>
   );
 };
 
@@ -63,6 +79,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
   },
+  buttonContainer:{
+    width:'100%',
+    display:'flex',
+    flexDirection:"row",
+    justifyContent:"space-around",
+  }
 });
 
 export default UserInput;

@@ -44,7 +44,7 @@ const Table = () => {
       />
     );
   }
-
+  console.log('usersState?.users:',usersState?.users)
   return (
     <>
       {usersState?.users?.length === 0 ? (
@@ -64,14 +64,14 @@ const Table = () => {
           </DataTable.Header>
 
           {usersState?.users?.slice(from, to).map(item => (
-            <DataTable.Row key={item.bananas}>
+            <DataTable.Row key={item?.bananas}>
               <DataTable.Cell>
                 <Text
                   style={[
                     styles.userName,
                     {
                       color:
-                        item.mark === FLAG_STATUS.TRUE
+                        item?.mark === FLAG_STATUS.TRUE
                           ? COLORS.red
                           : COLORS.black,
                     },

@@ -3,6 +3,8 @@ export const COLORS = {
   black: '#000000',
   red: '#ff0000',
   white: '#fff',
+  purple:'#6200ee',
+  green: "#008000"
 };
 
 export const SIZE = {
