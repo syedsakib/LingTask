@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ActivityIndicator, DataTable, Text} from 'react-native-paper';
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {COLORS, FLAG_STATUS, HEADERS, SIZE} from '../helpers/helpers';
 
 const Table = () => {
@@ -38,7 +38,7 @@ const Table = () => {
       />
     );
   }
-  
+
   return (
     <>
       {usersState?.users?.length === 0 ? (
@@ -79,18 +79,6 @@ const Table = () => {
               <DataTable.Cell numeric>{item?.bananas}</DataTable.Cell>
             </DataTable.Row>
           ))}
-
-          {/* <DataTable.Pagination
-            page={page}
-            numberOfPages={Math.ceil(usersState?.users?.length / itemsPerPage)}
-            onPageChange={page => setPage(page)}
-            label={`${from + 1}-${to} of ${usersState?.users?.length}`}
-            numberOfItemsPerPageList={numberOfItemsPerPageList}
-            numberOfItemsPerPage={itemsPerPage}
-            onItemsPerPageChange={onItemsPerPageChange}
-            showFastPaginationControls
-            selectPageDropdownLabel={'Rows per page'}
-          /> */}
         </DataTable>
       )}
     </>
@@ -112,9 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
-  userName: {
-    // Additional styles for userName can be defined here
-  },
+  userName: {},
 });
 
 export default Table;

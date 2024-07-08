@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Button, Text} from 'react-native-paper';
 import {COLORS} from '../helpers/helpers';
 import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
-import { fetchLowRankUsers } from '../redux/actions/user';
+import {fetchLowRankUsers} from '../redux/actions/user';
 
-
-const LowestRankUsers = ({lowRankEnabled,setLowRankEnabled}) => {
+const LowestRankUsers = ({lowRankEnabled, setLowRankEnabled}) => {
   const dispatch = useDispatch();
-  
-  const onSearchForLowRAnkUsers=()=>{
-    setLowRankEnabled(!lowRankEnabled)
-    
-    if(!lowRankEnabled){
-        dispatch(fetchLowRankUsers())
+
+  const onSearchForLowRAnkUsers = () => {
+    setLowRankEnabled(!lowRankEnabled);
+
+    if (!lowRankEnabled) {
+      dispatch(fetchLowRankUsers());
     }
-  }
+  };
 
   return (
     <Button
@@ -23,7 +22,7 @@ const LowestRankUsers = ({lowRankEnabled,setLowRankEnabled}) => {
       buttonColor={lowRankEnabled ? COLORS.green : COLORS.white}
       onPress={onSearchForLowRAnkUsers}
       style={styles.buttonContainer}>
-     {lowRankEnabled ? (
+      {lowRankEnabled ? (
         <Text style={[styles.buttonText, {color: COLORS.white}]}>
           Low-Rank Users
         </Text>
@@ -40,9 +39,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
   },
-  buttonText: {
-    //
-  },
+  buttonText: {},
 });
 
 export default LowestRankUsers;

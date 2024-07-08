@@ -7,7 +7,7 @@ const FuzzySearchButton = ({enabled, toggleEnabled}) => {
   return (
     <Button
       mode="outlined"
-      buttonColor={enabled ? COLORS.green: COLORS.white }
+      buttonColor={enabled ? COLORS.green : COLORS.white}
       onPress={() => toggleEnabled(!enabled)}
       style={styles.buttonContainer}>
       {enabled ? (
@@ -25,11 +25,9 @@ const FuzzySearchButton = ({enabled, toggleEnabled}) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginTop: 10
+    marginTop: 10,
   },
-  buttonText: {
-    //
-  },
+  buttonText: {},
 });
 
 export default FuzzySearchButton;
