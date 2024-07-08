@@ -6,14 +6,13 @@ import {useDispatch} from 'react-redux';
 import { fetchLowRankUsers } from '../redux/actions/user';
 
 
-const LowestRankUsers = () => {
-    const dispatch = useDispatch();
-  const [enabled, setEnabled] = useState(false);
-
+const LowestRankUsers = ({lowRankEnabled,setLowRankEnabled}) => {
+  const dispatch = useDispatch();
+  
   const onSearchForLowRAnkUsers=()=>{
-    setEnabled(!enabled)
+    setLowRankEnabled(!lowRankEnabled)
     
-    if(!enabled){
+    if(!lowRankEnabled){
         dispatch(fetchLowRankUsers())
     }
   }
@@ -21,10 +20,10 @@ const LowestRankUsers = () => {
   return (
     <Button
       mode="outlined"
-      buttonColor={enabled ? COLORS.green : COLORS.white}
+      buttonColor={lowRankEnabled ? COLORS.green : COLORS.white}
       onPress={onSearchForLowRAnkUsers}
       style={styles.buttonContainer}>
-     {enabled ? (
+     {lowRankEnabled ? (
         <Text style={[styles.buttonText, {color: COLORS.white}]}>
           Low-Rank Users
         </Text>

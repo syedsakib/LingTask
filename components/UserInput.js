@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TextInput, TouchableRipple, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -10,22 +10,26 @@ import {COLORS} from '../helpers/helpers';
 import FuzzySearchButton from './FuzzySearchButton';
 import LowestRankUsers from './LowestRankUsers';
 
-const UserInput = () => {
+const UserInput = ({
+  userName,
+  setUserName,
+  fuzzySearchEnabled,
+  setFuzzySearchEnabled,
+  lowRankEnabled,
+  setLowRankEnabled,
+}) => {
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState('');
-  const [enabled, setEnabled] = useState(false);
-
   const placeSubmitHandler = () => {
     if (userName.trim() === '') {
       return;
     }
 
     {
-      enabled
+      fuzzySearchEnabled
         ? dispatch(fetchUsersWithNameFuzzySearch(userName))
         : dispatch(fetchUsersWithName(userName));
     }
-    setUserName('');
+    // setUserName('');
   };
 
   const setNameChangeHandler = value => {
@@ -50,10 +54,10 @@ const UserInput = () => {
           <Text>Search</Text>
         </TouchableRipple>
       </View>
-      {/* <View style={styles.buttonContainer}>
-        <FuzzySearchButton enabled={enabled} toggleEnabled={setEnabled} />
-        <LowestRankUsers />
-      </View> */}
+      <View style={styles.buttonContainer}>
+        <FuzzySearchButton enabled={fuzzySearchEnabled} toggleEnabled={setFuzzySearchEnabled} />
+        <LowestRankUsers lowRankEnabled={lowRankEnabled} setLowRankEnabled={setLowRankEnabled} />
+      </View>
     </>
   );
 };
@@ -79,12 +83,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
   },
-  buttonContainer:{
-    width:'100%',
-    display:'flex',
-    flexDirection:"row",
-    justifyContent:"space-around",
-  }
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
 });
 
 export default UserInput;

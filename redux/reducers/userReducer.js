@@ -2,6 +2,7 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
+  CLEAR_USER_DATA,
 } from '../types/userTypes';
 
 const initialState = {
@@ -19,7 +20,7 @@ const userReducer = (state = initialState, action) => {
       };
     case FETCH_USERS_SUCCESS:
       return {
-          loading: false,
+        loading: false,
         error: '',
         users: action.payload,
       };
@@ -29,6 +30,8 @@ const userReducer = (state = initialState, action) => {
         error: action.payload,
         users: [],
       };
+    case CLEAR_USER_DATA:
+      return initialState;
     default:
       return state;
   }

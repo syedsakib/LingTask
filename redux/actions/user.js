@@ -3,6 +3,7 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
+  CLEAR_USER_DATA
 } from '../types/userTypes';
 import userData from '../data/userData';
 
@@ -18,6 +19,10 @@ const fetchUsersSuccess = users => ({
 const fetchUsersError = error => ({
   type: FETCH_USERS_FAILURE,
   payload: error,
+});
+
+export const clearUserData = () => ({
+  type: CLEAR_USER_DATA,
 });
 
 export const fuzzySearchAndSort = (query) => {

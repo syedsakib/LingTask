@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ActivityIndicator, DataTable, Text} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchUsers} from '../redux/actions/user';
+import { useSelector} from 'react-redux';
 import {COLORS, FLAG_STATUS, HEADERS, SIZE} from '../helpers/helpers';
 
 const Table = () => {
-  const dispatch = useDispatch();
   const users = useSelector(state => state.users);
   const [page, setPage] = useState(0);
   const [numberOfItemsPerPageList] = useState([2, 3, 4]);
@@ -21,10 +19,6 @@ const Table = () => {
   useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
 
   useEffect(() => {
     setUsersState({
@@ -44,11 +38,13 @@ const Table = () => {
       />
     );
   }
-  console.log('usersState?.users:',usersState?.users)
+  
   return (
     <>
       {usersState?.users?.length === 0 ? (
-        <Text>No data to show</Text>
+        <View style={styles.emptyContent}>
+          <Text>No data to show</Text>
+        </View>
       ) : (
         <DataTable>
           <DataTable.Header>
@@ -84,7 +80,7 @@ const Table = () => {
             </DataTable.Row>
           ))}
 
-          <DataTable.Pagination
+          {/* <DataTable.Pagination
             page={page}
             numberOfPages={Math.ceil(usersState?.users?.length / itemsPerPage)}
             onPageChange={page => setPage(page)}
@@ -94,7 +90,7 @@ const Table = () => {
             onItemsPerPageChange={onItemsPerPageChange}
             showFastPaginationControls
             selectPageDropdownLabel={'Rows per page'}
-          />
+          /> */}
         </DataTable>
       )}
     </>
@@ -109,6 +105,12 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     fontWeight: 'bold',
+  },
+  emptyContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
   },
   userName: {
     // Additional styles for userName can be defined here

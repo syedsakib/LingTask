@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
-import Table from './components/Table';
+import { useDispatch } from 'react-redux';
 import UserInput from './components/UserInput';
+import Table from './components/Table';
+import { clearUserData } from './redux/actions/user';
 
 const App = () => {
+  const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [fuzzySearchEnabled, setFuzzySearchEnabled] = useState(false);
+  const [lowRankEnabled, setLowRankEnabled] = useState(false);
 
-  const onRefresh = () => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
-
-    // Simulate fetching data after a delay
-    setTimeout(() => {
-      // Replace this with your actual data fetching logic
-      // For example, fetchData()
-      
-      // After fetching data, set refreshing to false
-      setRefreshing(false);
-    }, 1000); // Delay for demonstration purposes, replace with actual fetch delay
-  };
+    setUserName('');
+    setFuzzySearchEnabled(false);
+    setLowRankEnabled(false);
+    dispatch(clearUserData());
+    setRefreshing(false);
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -30,10 +31,16 @@ const App = () => {
             colors={['#9Bd35A', '#689F38']}
             tintColor={'#689F38'}
           />
-        }
-      >
-        <UserInput />
-   
+        }>
+        <UserInput
+          userName={userName}
+          setUserName={setUserName}
+          fuzzySearchEnabled={fuzzySearchEnabled}
+          setFuzzySearchEnabled={setFuzzySearchEnabled}
+          lowRankEnabled={lowRankEnabled}
+          setLowRankEnabled={setLowRankEnabled}
+        />
+
         <View style={styles.tableContainer}>
           <Table />
         </View>
@@ -47,11 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   tableContainer: {
